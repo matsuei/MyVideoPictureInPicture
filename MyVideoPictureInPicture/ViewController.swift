@@ -69,13 +69,6 @@ class ViewController: UIViewController {
         displayNext()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? AVPlayerViewController, let videoURL = playButtonVideoURL {
-            viewController.player = AVPlayer(url: videoURL)
-            viewController.player?.play()
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let session = AVAudioSession.sharedInstance()
@@ -262,7 +255,16 @@ private extension ViewController {
         progressView.isHidden = true
         start()
     }
-        
+    
+    @IBAction func didTapPlayButton(_ sender: Any) {
+        if let videoURL = playButtonVideoURL {
+            let viewController = AVPlayerViewController()
+            viewController.allowsPictureInPicturePlayback = true
+            viewController.player = AVPlayer(url: videoURL)
+            viewController.player?.play()
+            present(viewController, animated: true)
+        }
+    }
 }
 
 extension ViewController: PHPickerViewControllerDelegate {

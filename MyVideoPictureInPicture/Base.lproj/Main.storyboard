@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19052" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19045"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PHPickerDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyVideoPictureInPicture" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,7 +26,7 @@
                                 <color key="tintColor" systemColor="systemFillColor"/>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-ar-BuB">
-                                <rect key="frame" x="190" y="429.5" width="34" height="37"/>
+                                <rect key="frame" x="188" y="426.5" width="38" height="43.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <state key="normal">
                                     <imageReference key="image" image="play.fill" catalog="system" symbolScale="large"/>
@@ -35,11 +35,11 @@
                                     </preferredSymbolConfiguration>
                                 </state>
                                 <connections>
-                                    <segue destination="RBP-i6-S40" kind="presentation" id="ttY-i1-2L6"/>
+                                    <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHq-KE-Xda"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUH-sZ-1o3" userLabel="Live Photos Only">
-                                <rect key="frame" x="351" y="64" width="43" height="42"/>
+                                <rect key="frame" x="350" y="116" width="44" height="44"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="livephoto" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="medium">
@@ -51,7 +51,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUv-Z2-JwA" userLabel="Images Including Live Photos">
-                                <rect key="frame" x="297.5" y="66" width="45.5" height="38"/>
+                                <rect key="frame" x="295.5" y="118" width="46.5" height="40"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="photo" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="medium">
@@ -63,7 +63,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hh-Nr-iJC" userLabel="Images and Videos">
-                                <rect key="frame" x="241.5" y="64.5" width="48" height="41"/>
+                                <rect key="frame" x="238.5" y="116.5" width="49" height="43"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="photo.on.rectangle.angled" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="medium">
@@ -75,7 +75,7 @@
                                 </connections>
                             </button>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5O6-P9-SgL">
-                                <rect key="frame" x="249.5" y="111" width="136.5" height="4"/>
+                                <rect key="frame" x="246.5" y="164" width="139.5" height="4"/>
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -123,15 +123,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="livephoto" catalog="system" width="128" height="122"/>
+        <image name="livephoto" catalog="system" width="128" height="124"/>
         <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="photo.on.rectangle.angled" catalog="system" width="128" height="100"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="photo.on.rectangle.angled" catalog="system" width="128" height="98"/>
+        <image name="play.fill" catalog="system" width="120" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemFillColor">
-            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
