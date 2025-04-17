@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     private var selectedAssetIdentifiers = [String]()
     private var selectedAssetIdentifierIterator: IndexingIterator<[String]>?
     private var currentAssetIdentifier: String?
+    var player: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
     
     @IBAction func presentPickerForImagesAndVideos(_ sender: Any) {
         presentPicker(filter: .videos)
@@ -258,11 +260,13 @@ private extension ViewController {
     
     @IBAction func didTapPlayButton(_ sender: Any) {
         if let videoURL = playButtonVideoURL {
-            let viewController = AVPlayerViewController()
-            viewController.allowsPictureInPicturePlayback = true
-            viewController.player = AVPlayer(url: videoURL)
-            viewController.player?.play()
-            present(viewController, animated: true)
+            player = AVPlayer(url: videoURL)
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer?.frame = .init(origin: .zero, size: .init(width: 400, height: 400))
+            playerLayer?.videoGravity = .resizeAspect
+            if let playerLayer = playerLayer {
+                self.view.layer.addSublayer(playerLayer)
+            }
         }
     }
 }
