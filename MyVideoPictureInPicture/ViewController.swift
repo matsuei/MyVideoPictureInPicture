@@ -12,12 +12,7 @@ import AVKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var livePhotoView: PHLivePhotoView! {
-        didSet {
-            livePhotoView.contentMode = .scaleAspectFit
-        }
-    }
+    @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var playButton: UIButton!
     private var playButtonVideoURL: URL?
 
@@ -73,64 +68,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(.playback, mode: .moviePlayback)
-        try! session.setActive(true)
-
-        let margin = ((view.bounds.width - 200) / 2)
-        _startButton.frame = .init(x: margin, y: 400, width: 200, height: 30)
-        _startButton.addTarget(self, action: #selector(toggle), for: .touchUpInside)
-        _startButton.setTitle("Start PiP", for: .normal)
-        self.view.addSubview(_startButton)
-    }
-    
-    func start() {
-        // 表示用の画面を作成
-        let videoContainerView = UIView()
-        videoContainerView.frame = .init(x: 10, y: 200, width: 200, height: 30)
-        self.view.addSubview(videoContainerView)
-        _pipContent.imaga = imageView
-
-        let bufferDisplayLayer = _pipContent.bufferDisplayLayer
-        bufferDisplayLayer.frame = videoContainerView.bounds
-        bufferDisplayLayer.videoGravity = .resizeAspect
-        videoContainerView.layer.addSublayer(bufferDisplayLayer)
-
-        _pipContent.start()
-
-        DispatchQueue.main.async {
-            // PinP をサポートしているデバイスかどうかを確認
-            if AVPictureInPictureController.isPictureInPictureSupported() {
-
-                // AVPictureInPictureController の生成
-                self._pipController = AVPictureInPictureController(
-                    contentSource: .init(
-                        sampleBufferDisplayLayer:
-                            self._pipContent.bufferDisplayLayer,
-                        playbackDelegate: self))
-                self._pipController?.delegate = self
-
-                self._pipPossibleObservation = self._pipController?.observe(
-                    \AVPictureInPictureController.isPictureInPicturePossible,
-                    options: [.initial, .new]) { [weak self] _, change in
-                    guard let self = self else { return }
-
-                    // 再生可能になったら PinP ボタンを有効化
-                    if (change.newValue ?? false) {
-                        self._startButton.isEnabled = (change.newValue ?? false)
-                    }
-                }
-            }
-        }
-    }
-    
-    @objc func toggle() {
-        guard let _pipController = _pipController else { return }
-        if !_pipController.isPictureInPictureActive {
-            _pipController.startPictureInPicture()
-        } else {
-            _pipController.stopPictureInPicture()
-        }
     }
 }
 
@@ -214,10 +151,6 @@ private extension ViewController {
     }
     
     func displayProgress(_ progress: Progress?) {
-        imageView.image = nil
-        imageView.isHidden = true
-        livePhotoView.livePhoto = nil
-        livePhotoView.isHidden = true
         playButtonVideoURL = nil
         playButton.isHidden = true
         progressView.observedProgress = progress
@@ -225,10 +158,6 @@ private extension ViewController {
     }
     
     func displayVideoPlayButton(forURL videoURL: URL?) {
-        imageView.image = nil
-        imageView.isHidden = true
-        livePhotoView.livePhoto = nil
-        livePhotoView.isHidden = true
         playButtonVideoURL = videoURL
         playButton.isHidden = videoURL == nil
         progressView.observedProgress = nil
@@ -236,10 +165,6 @@ private extension ViewController {
     }
     
     func displayLivePhoto(_ livePhoto: PHLivePhoto?) {
-        imageView.image = nil
-        imageView.isHidden = true
-        livePhotoView.livePhoto = livePhoto
-        livePhotoView.isHidden = livePhoto == nil
         playButtonVideoURL = nil
         playButton.isHidden = true
         progressView.observedProgress = nil
@@ -247,25 +172,21 @@ private extension ViewController {
     }
     
     func displayImage(_ image: UIImage?) {
-        imageView.image = image
-        imageView.isHidden = image == nil
-        livePhotoView.livePhoto = nil
-        livePhotoView.isHidden = true
         playButtonVideoURL = nil
         playButton.isHidden = true
         progressView.observedProgress = nil
         progressView.isHidden = true
-        start()
     }
     
     @IBAction func didTapPlayButton(_ sender: Any) {
         if let videoURL = playButtonVideoURL {
             player = AVPlayer(url: videoURL)
             playerLayer = AVPlayerLayer(player: player)
-            playerLayer?.frame = .init(origin: .zero, size: .init(width: 400, height: 400))
+            playerLayer?.frame = .init(origin: .zero, size: videoLayerView.frame.size)
             playerLayer?.videoGravity = .resizeAspect
             if let playerLayer = playerLayer {
-                self.view.layer.addSublayer(playerLayer)
+                videoLayerView.layer.addSublayer(playerLayer)
+                player?.play()
             }
         }
     }

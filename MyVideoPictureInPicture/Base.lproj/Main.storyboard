@@ -17,27 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="6J6-Wh-9Ol" userLabel="Live Photo View" customClass="PHLivePhotoView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.on.rectangle.angled" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Tfa-GR-aFN">
-                                <rect key="frame" x="0.0" y="-0.5" width="414" height="896"/>
-                                <color key="tintColor" systemColor="systemFillColor"/>
-                            </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-ar-BuB">
-                                <rect key="frame" x="188" y="426.5" width="38" height="43.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="play.fill" catalog="system" symbolScale="large"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                    </preferredSymbolConfiguration>
-                                </state>
-                                <connections>
-                                    <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHq-KE-Xda"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUH-sZ-1o3" userLabel="Live Photos Only">
                                 <rect key="frame" x="350" y="116" width="44" height="44"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
@@ -77,36 +56,48 @@
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5O6-P9-SgL">
                                 <rect key="frame" x="246.5" y="164" width="139.5" height="4"/>
                             </progressView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-kR-dxo">
+                                <rect key="frame" x="20" y="198" width="374" height="546.5"/>
+                                <color key="backgroundColor" systemColor="systemGray2Color"/>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-ar-BuB">
+                                <rect key="frame" x="188" y="774.5" width="38" height="43.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="play.fill" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                    </preferredSymbolConfiguration>
+                                </state>
+                                <connections>
+                                    <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHq-KE-Xda"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="5O6-P9-SgL" firstAttribute="leading" secondItem="6hh-Nr-iJC" secondAttribute="leadingMargin" id="0ta-MJ-TcZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
                             <constraint firstItem="JUv-Z2-JwA" firstAttribute="firstBaseline" secondItem="6hh-Nr-iJC" secondAttribute="firstBaseline" id="2Xm-kg-8Vj"/>
                             <constraint firstItem="K8h-ar-BuB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3GX-cO-2BE"/>
-                            <constraint firstItem="K8h-ar-BuB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5Fc-Pb-x8b"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dUH-sZ-1o3" secondAttribute="trailing" constant="20" id="5zY-k9-fvJ"/>
+                            <constraint firstItem="K8h-ar-BuB" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="30" id="8n6-mk-mPD"/>
                             <constraint firstItem="dUH-sZ-1o3" firstAttribute="firstBaseline" secondItem="6hh-Nr-iJC" secondAttribute="firstBaseline" id="95F-tl-kDv"/>
-                            <constraint firstItem="6J6-Wh-9Ol" firstAttribute="bottom" secondItem="Tfa-GR-aFN" secondAttribute="bottom" id="9Dj-Yy-7sV"/>
+                            <constraint firstItem="PI5-kR-dxo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzw-CD-Hid"/>
                             <constraint firstItem="dUH-sZ-1o3" firstAttribute="trailingMargin" secondItem="5O6-P9-SgL" secondAttribute="trailing" id="HzF-xj-pUH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="K8h-ar-BuB" secondAttribute="bottom" constant="10" id="PLk-j4-38b"/>
                             <constraint firstItem="dUH-sZ-1o3" firstAttribute="leading" secondItem="JUv-Z2-JwA" secondAttribute="trailing" constant="8" symbolic="YES" id="Se3-pH-5eu"/>
-                            <constraint firstItem="6J6-Wh-9Ol" firstAttribute="top" secondItem="Tfa-GR-aFN" secondAttribute="top" id="W9d-9P-kuZ"/>
-                            <constraint firstItem="6J6-Wh-9Ol" firstAttribute="trailing" secondItem="Tfa-GR-aFN" secondAttribute="trailing" id="WXh-Ek-9i3"/>
                             <constraint firstItem="JUv-Z2-JwA" firstAttribute="leading" secondItem="6hh-Nr-iJC" secondAttribute="trailing" constant="8" symbolic="YES" id="dVh-O7-MhU"/>
-                            <constraint firstItem="6J6-Wh-9Ol" firstAttribute="leading" secondItem="Tfa-GR-aFN" secondAttribute="leading" id="eX3-Cr-Vkc"/>
-                            <constraint firstItem="Tfa-GR-aFN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="f93-tE-OQE"/>
-                            <constraint firstItem="Tfa-GR-aFN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ofW-Lz-UBv"/>
-                            <constraint firstAttribute="bottom" secondItem="Tfa-GR-aFN" secondAttribute="bottom" id="orE-1a-W5p"/>
+                            <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="5O6-P9-SgL" secondAttribute="bottom" constant="30" id="oq5-uW-NUE"/>
                             <constraint firstItem="5O6-P9-SgL" firstAttribute="top" secondItem="dUH-sZ-1o3" secondAttribute="baseline" constant="20" id="rfA-cO-gXK"/>
-                            <constraint firstItem="Tfa-GR-aFN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="sNr-i4-wt1"/>
                             <constraint firstItem="dUH-sZ-1o3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="uMo-Jj-l7S"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="Tfa-GR-aFN" id="Qyz-6J-9hH"/>
-                        <outlet property="livePhotoView" destination="6J6-Wh-9Ol" id="My9-8U-Pas"/>
                         <outlet property="playButton" destination="K8h-ar-BuB" id="QuH-UE-pvH"/>
                         <outlet property="progressView" destination="5O6-P9-SgL" id="CI0-m5-Jlu"/>
+                        <outlet property="videoLayerView" destination="PI5-kR-dxo" id="jOH-I4-Mtu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -130,8 +121,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemFillColor">
-            <color red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
