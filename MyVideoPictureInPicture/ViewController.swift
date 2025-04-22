@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     private var currentAssetIdentifier: String?
     var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
+    private var observation: NSKeyValueObservation?
     
     @IBAction func presentPickerForImagesAndVideos(_ sender: Any) {
         presentPicker(filter: .videos)
@@ -162,6 +163,15 @@ private extension ViewController {
         playButton.isHidden = videoURL == nil
         progressView.observedProgress = nil
         progressView.isHidden = true
+        if let videoURL {
+            player = AVPlayer(url: videoURL)
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer?.frame = .init(origin: .zero, size: videoLayerView.frame.size)
+            playerLayer?.videoGravity = .resizeAspect
+            if let playerLayer = playerLayer {
+                videoLayerView.layer.addSublayer(playerLayer)
+            }
+        }
     }
     
     func displayLivePhoto(_ livePhoto: PHLivePhoto?) {
@@ -179,16 +189,20 @@ private extension ViewController {
     }
     
     @IBAction func didTapPlayButton(_ sender: Any) {
-        if let videoURL = playButtonVideoURL {
-            player = AVPlayer(url: videoURL)
-            playerLayer = AVPlayerLayer(player: player)
-            playerLayer?.frame = .init(origin: .zero, size: videoLayerView.frame.size)
-            playerLayer?.videoGravity = .resizeAspect
-            if let playerLayer = playerLayer {
-                videoLayerView.layer.addSublayer(playerLayer)
-                player?.play()
-            }
+        guard let player else {
+            return
         }
+        switch player.timeControlStatus {
+        case .playing:
+            player.pause()
+        case .paused:
+            player.play()
+        case .waitingToPlayAtSpecifiedRate:
+            print("バッファリング中に変わりました")
+        @unknown default:
+            print("不明な状態に変わりました")
+        }
+        
     }
 }
 
