@@ -195,8 +195,10 @@ private extension ViewController {
         switch player.timeControlStatus {
         case .playing:
             player.pause()
+            playButton.setImage(.init(systemName: "play.fill"), for: .normal)
         case .paused:
             player.play()
+            playButton.setImage(.init(systemName: "pause.fill"), for: .normal)
         case .waitingToPlayAtSpecifiedRate:
             print("バッファリング中に変わりました")
         @unknown default:
