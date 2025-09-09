@@ -60,6 +60,14 @@
                                 <rect key="frame" x="20" y="198" width="374" height="546.5"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1p6-fq-ice">
+                                <rect key="frame" x="266" y="779" width="75" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="togglePictureInPictureMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JLD-5m-el2"/>
+                                </connections>
+                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-ar-BuB">
                                 <rect key="frame" x="188" y="774.5" width="38" height="43.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
@@ -77,7 +85,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="1p6-fq-ice" firstAttribute="leading" secondItem="K8h-ar-BuB" secondAttribute="trailing" constant="40" id="0cu-ig-Mj7"/>
                             <constraint firstItem="5O6-P9-SgL" firstAttribute="leading" secondItem="6hh-Nr-iJC" secondAttribute="leadingMargin" id="0ta-MJ-TcZ"/>
+                            <constraint firstItem="1p6-fq-ice" firstAttribute="centerY" secondItem="K8h-ar-BuB" secondAttribute="centerY" id="2Kd-Vf-rOf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
                             <constraint firstItem="JUv-Z2-JwA" firstAttribute="firstBaseline" secondItem="6hh-Nr-iJC" secondAttribute="firstBaseline" id="2Xm-kg-8Vj"/>
                             <constraint firstItem="K8h-ar-BuB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3GX-cO-2BE"/>
@@ -95,6 +105,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="pipButton" destination="1p6-fq-ice" id="RZ0-5N-poF"/>
                         <outlet property="playButton" destination="K8h-ar-BuB" id="QuH-UE-pvH"/>
                         <outlet property="progressView" destination="5O6-P9-SgL" id="CI0-m5-Jlu"/>
                         <outlet property="videoLayerView" destination="PI5-kR-dxo" id="jOH-I4-Mtu"/>

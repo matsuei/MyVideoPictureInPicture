@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var pipButton: UIButton!
+    
     private var playButtonVideoURL: URL?
 
     private var selection = [String: PHPickerResult]()
@@ -43,6 +45,10 @@ class ViewController: UIViewController {
     private var _observer: NSObjectProtocol?
     private let _startButton = UIButton()
     
+    var pipController: AVPictureInPictureController!
+    var pipPossibleObservation: NSKeyValueObservation?
+    var playerStatusObservation: NSKeyValueObservation?
+    
     /// - Tag: PresentPicker
     private func presentPicker(filter: PHPickerFilter?) {
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
@@ -69,6 +75,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+            switch status {
+            default:
+                break
+            }
+        }
     }
 }
 
@@ -171,6 +184,7 @@ private extension ViewController {
             if let playerLayer = playerLayer {
                 videoLayerView.layer.addSublayer(playerLayer)
             }
+            setupPictureInPicture()
         }
     }
     
@@ -206,6 +220,33 @@ private extension ViewController {
         }
         
     }
+    
+    func setupPictureInPicture() {
+        // Ensure PiP is supported by current device.
+        if AVPictureInPictureController.isPictureInPictureSupported(), let playerLayer {
+            // Create a new controller, passing the reference to the AVPlayerLayer.
+            pipController = AVPictureInPictureController(playerLayer: playerLayer)
+            pipController.delegate = self
+
+
+            pipPossibleObservation = pipController.observe(\AVPictureInPictureController.isPictureInPicturePossible,
+    options: [.initial, .new]) { [weak self] _, change in
+                // Update the PiP button's enabled state.
+                self?.pipButton.isEnabled = change.newValue ?? false
+            }
+        } else {
+            // PiP isn't supported by the current device. Disable the PiP button.
+            pipButton.isEnabled = false
+        }
+    }
+    
+    @IBAction func togglePictureInPictureMode(_ sender: UIButton) {
+        if pipController.isPictureInPictureActive {
+            pipController.stopPictureInPicture()
+        } else {
+            pipController.startPictureInPicture()
+        }
+    }
 }
 
 extension ViewController: PHPickerViewControllerDelegate {
@@ -234,6 +275,10 @@ extension ViewController: PHPickerViewControllerDelegate {
 }
 
 extension ViewController: AVPictureInPictureControllerDelegate {
+    
+    func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        print("\(#function)")
+    }
 
     func pictureInPictureController(
         _ pictureInPictureController: AVPictureInPictureController,
@@ -241,12 +286,6 @@ extension ViewController: AVPictureInPictureControllerDelegate {
     ) {
         print("\(#function)")
         print("pip error: \(error)")
-    }
-
-    func pictureInPictureControllerWillStartPictureInPicture(
-        _ pictureInPictureController: AVPictureInPictureController
-    ) {
-        print("\(#function)")
     }
 
     func pictureInPictureControllerWillStopPictureInPicture(
