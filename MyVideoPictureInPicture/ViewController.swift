@@ -10,8 +10,6 @@ import PhotosUI
 import AVKit
 
 class ViewController: UIViewController {
-    
-    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var pipButton: UIButton!
@@ -28,14 +26,6 @@ class ViewController: UIViewController {
     
     @IBAction func presentPickerForImagesAndVideos(_ sender: Any) {
         presentPicker(filter: .videos)
-    }
-    
-    @IBAction func presentPickerForImagesIncludingLivePhotos(_ sender: Any) {
-        presentPicker(filter: PHPickerFilter.images)
-    }
-
-    @IBAction func presentPickerForLivePhotosOnly(_ sender: Any) {
-        presentPicker(filter: PHPickerFilter.livePhotos)
     }
     
     private let _pipContent = VideoProvider()
@@ -60,7 +50,7 @@ class ViewController: UIViewController {
         // Set the selection behavior to respect the user’s selection order.
         configuration.selection = .ordered
         // Set the selection limit to enable multiselection.
-        configuration.selectionLimit = 0
+        configuration.selectionLimit = 1
         // Set the preselected asset identifiers with the identifiers that the app tracks.
         configuration.preselectedAssetIdentifiers = selectedAssetIdentifiers
         
@@ -69,113 +59,27 @@ class ViewController: UIViewController {
         present(picker, animated: true)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        displayNext()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
-            switch status {
-            default:
-                break
-            }
-        }
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }
 
 private extension ViewController {
-    
-    /// - Tag: LoadItemProvider
-    func displayNext() {
-        guard let assetIdentifier = selectedAssetIdentifierIterator?.next() else { return }
-        currentAssetIdentifier = assetIdentifier
-        
-        let progress: Progress?
-        let itemProvider = selection[assetIdentifier]!.itemProvider
-        if itemProvider.canLoadObject(ofClass: PHLivePhoto.self) {
-            progress = itemProvider.loadObject(ofClass: PHLivePhoto.self) { [weak self] livePhoto, error in
-                DispatchQueue.main.async {
-                    self?.handleCompletion(assetIdentifier: assetIdentifier, object: livePhoto, error: error)
-                }
-            }
-        }
-        else if itemProvider.canLoadObject(ofClass: UIImage.self) {
-            progress = itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                DispatchQueue.main.async {
-                    self?.handleCompletion(assetIdentifier: assetIdentifier, object: image, error: error)
-                }
-            }
-        } else if itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-            progress = itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-                do {
-                    guard let url = url, error == nil else {
-                        throw error ?? NSError(domain: NSFileProviderErrorDomain, code: -1, userInfo: nil)
-                    }
-                    let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
-                    try? FileManager.default.removeItem(at: localURL)
-                    try FileManager.default.copyItem(at: url, to: localURL)
-                    DispatchQueue.main.async {
-                        self?.handleCompletion(assetIdentifier: assetIdentifier, object: localURL)
-                    }
-                } catch let catchedError {
-                    DispatchQueue.main.async {
-                        self?.handleCompletion(assetIdentifier: assetIdentifier, object: nil, error: catchedError)
-                    }
-                }
-            }
-        } else {
-            progress = nil
-        }
-        
-        displayProgress(progress)
-    }
     
     func handleCompletion(assetIdentifier: String, object: Any?, error: Error? = nil) {
         guard currentAssetIdentifier == assetIdentifier else { return }
-        if let livePhoto = object as? PHLivePhoto {
-            displayLivePhoto(livePhoto)
-        } else if let image = object as? UIImage {
-            displayImage(image)
-        } else if let url = object as? URL {
+        if let url = object as? URL {
             displayVideoPlayButton(forURL: url)
-        } else if let error = error {
-            print("Couldn't display \(assetIdentifier) with error: \(error)")
-            displayErrorImage()
-        } else {
-            displayUnknownImage()
         }
     }
     
 }
 
 private extension ViewController {
-    
-    func displayEmptyImage() {
-        displayImage(UIImage(systemName: "photo.on.rectangle.angled"))
-    }
-    
-    func displayErrorImage() {
-        displayImage(UIImage(systemName: "exclamationmark.circle"))
-    }
-    
-    func displayUnknownImage() {
-        displayImage(UIImage(systemName: "questionmark.circle"))
-    }
-    
-    func displayProgress(_ progress: Progress?) {
-        playButtonVideoURL = nil
-        playButton.isHidden = true
-        progressView.observedProgress = progress
-        progressView.isHidden = progress == nil
-    }
-    
     func displayVideoPlayButton(forURL videoURL: URL?) {
         playButtonVideoURL = videoURL
         playButton.isHidden = videoURL == nil
-        progressView.observedProgress = nil
-        progressView.isHidden = true
         if let videoURL {
             player = AVPlayer(url: videoURL)
             playerLayer = AVPlayerLayer(player: player)
@@ -186,20 +90,6 @@ private extension ViewController {
             }
             setupPictureInPicture()
         }
-    }
-    
-    func displayLivePhoto(_ livePhoto: PHLivePhoto?) {
-        playButtonVideoURL = nil
-        playButton.isHidden = true
-        progressView.observedProgress = nil
-        progressView.isHidden = true
-    }
-    
-    func displayImage(_ image: UIImage?) {
-        playButtonVideoURL = nil
-        playButton.isHidden = true
-        progressView.observedProgress = nil
-        progressView.isHidden = true
     }
     
     @IBAction func didTapPlayButton(_ sender: Any) {
@@ -265,11 +155,27 @@ extension ViewController: PHPickerViewControllerDelegate {
         selection = newSelection
         selectedAssetIdentifiers = results.map(\.assetIdentifier!)
         selectedAssetIdentifierIterator = selectedAssetIdentifiers.makeIterator()
-        
-        if selection.isEmpty {
-            displayEmptyImage()
-        } else {
-            displayNext()
+        guard let assetIdentifier = selectedAssetIdentifierIterator?.next() else { return }
+        currentAssetIdentifier = assetIdentifier
+                
+        let progress: Progress?
+        let itemProvider = selection[assetIdentifier]!.itemProvider
+        progress = itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+            do {
+                guard let url = url, error == nil else {
+                    throw error ?? NSError(domain: NSFileProviderErrorDomain, code: -1, userInfo: nil)
+                }
+                let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+                try? FileManager.default.removeItem(at: localURL)
+                try FileManager.default.copyItem(at: url, to: localURL)
+                DispatchQueue.main.async {
+                    self?.handleCompletion(assetIdentifier: assetIdentifier, object: localURL)
+                }
+            } catch let catchedError {
+                DispatchQueue.main.async {
+                    self?.handleCompletion(assetIdentifier: assetIdentifier, object: nil, error: catchedError)
+                }
+            }
         }
     }
 }
