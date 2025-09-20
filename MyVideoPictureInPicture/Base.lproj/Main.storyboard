@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5D-Ob-531" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1042" y="72"/>
+            <point key="canvasLocation" x="-1058" y="90"/>
         </scene>
         <!--Title-->
         <scene sceneID="tne-QT-ifu">
@@ -58,18 +58,28 @@
                                     <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHq-KE-Xda"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hwx-SJ-6d9">
+                                <rect key="frame" x="107" y="348" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="5tq-fp-WTR"/>
+                                    <constraint firstAttribute="width" secondItem="hwx-SJ-6d9" secondAttribute="height" multiplier="1:1" id="G1T-21-piv"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="1p6-fq-ice" firstAttribute="leading" secondItem="K8h-ar-BuB" secondAttribute="trailing" constant="40" id="0cu-ig-Mj7"/>
+                            <constraint firstItem="1p6-fq-ice" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="K8h-ar-BuB" secondAttribute="trailing" symbolic="YES" id="0cu-ig-Mj7"/>
                             <constraint firstItem="1p6-fq-ice" firstAttribute="centerY" secondItem="K8h-ar-BuB" secondAttribute="centerY" id="2Kd-Vf-rOf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
                             <constraint firstItem="K8h-ar-BuB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3GX-cO-2BE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1p6-fq-ice" secondAttribute="trailing" constant="73" id="4BD-r1-t4p"/>
                             <constraint firstItem="K8h-ar-BuB" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="30" id="8n6-mk-mPD"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzw-CD-Hid"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="K8h-ar-BuB" secondAttribute="bottom" constant="10" id="PLk-j4-38b"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="UPu-Yw-pyP"/>
+                            <constraint firstItem="hwx-SJ-6d9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="d5e-S5-XKK"/>
+                            <constraint firstItem="hwx-SJ-6d9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oZp-Cw-DVU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="m1D-kG-DUP">
@@ -81,6 +91,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="hwx-SJ-6d9" id="1H9-0N-ILw"/>
                         <outlet property="pipButton" destination="1p6-fq-ice" id="RZ0-5N-poF"/>
                         <outlet property="playButton" destination="K8h-ar-BuB" id="QuH-UE-pvH"/>
                         <outlet property="videoLayerView" destination="PI5-kR-dxo" id="jOH-I4-Mtu"/>

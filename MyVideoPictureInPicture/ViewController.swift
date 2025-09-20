@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  MyVideoPictureInPicture
-//
-//  Created by Kenta Matsue on 2025/04/07.
-//
 
 import UIKit
 import PhotosUI
@@ -13,6 +7,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var pipButton: UIButton!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     
     private var playButtonVideoURL: URL?
 
@@ -39,19 +35,13 @@ class ViewController: UIViewController {
     var pipPossibleObservation: NSKeyValueObservation?
     var playerStatusObservation: NSKeyValueObservation?
     
-    /// - Tag: PresentPicker
     private func presentPicker(filter: PHPickerFilter?) {
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
         
-        // Set the filter type according to the user’s selection.
         configuration.filter = filter
-        // Set the mode to avoid transcoding, if possible, if your app supports arbitrary image/video encodings.
         configuration.preferredAssetRepresentationMode = .current
-        // Set the selection behavior to respect the user’s selection order.
         configuration.selection = .ordered
-        // Set the selection limit to enable multiselection.
         configuration.selectionLimit = 1
-        // Set the preselected asset identifiers with the identifiers that the app tracks.
         configuration.preselectedAssetIdentifiers = selectedAssetIdentifiers
         
         let picker = PHPickerViewController(configuration: configuration)
@@ -68,6 +58,7 @@ class ViewController: UIViewController {
 private extension ViewController {
     
     func handleCompletion(assetIdentifier: String, object: Any?, error: Error? = nil) {
+        activityIndicatorView.stopAnimating()
         guard currentAssetIdentifier == assetIdentifier else { return }
         if let url = object as? URL {
             displayVideoPlayButton(forURL: url)
@@ -140,9 +131,9 @@ private extension ViewController {
 }
 
 extension ViewController: PHPickerViewControllerDelegate {
-    /// - Tag: ParsePickerResults
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
+        activityIndicatorView.startAnimating()
         
         let existingSelection = self.selection
         var newSelection = [String: PHPickerResult]()
