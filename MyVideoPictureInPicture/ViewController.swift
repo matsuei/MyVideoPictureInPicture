@@ -7,8 +7,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var pipButton: UIButton!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    
+    @IBOutlet weak var progressView: UIProgressView!
     
     private var playButtonVideoURL: URL?
 
@@ -52,13 +51,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(false, animated: true)
+        progressView.isHidden = true
     }
 }
 
 private extension ViewController {
     
     func handleCompletion(assetIdentifier: String, object: Any?, error: Error? = nil) {
-        activityIndicatorView.stopAnimating()
+        progressView.isHidden = true
         guard currentAssetIdentifier == assetIdentifier else { return }
         if let url = object as? URL {
             displayVideoPlayButton(forURL: url)
@@ -72,6 +72,7 @@ private extension ViewController {
         playButtonVideoURL = videoURL
         playButton.isHidden = videoURL == nil
         if let videoURL {
+            playerLayer?.removeFromSuperlayer()
             player = AVPlayer(url: videoURL)
             playerLayer = AVPlayerLayer(player: player)
             playerLayer?.frame = .init(origin: .zero, size: videoLayerView.frame.size)
@@ -133,7 +134,6 @@ private extension ViewController {
 extension ViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-        activityIndicatorView.startAnimating()
         
         let existingSelection = self.selection
         var newSelection = [String: PHPickerResult]()
@@ -168,6 +168,8 @@ extension ViewController: PHPickerViewControllerDelegate {
                 }
             }
         }
+        progressView.isHidden = false
+        progressView.observedProgress = progress
     }
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="flC-Ll-kCf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="flC-Ll-kCf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <navigationController id="flC-Ll-kCf" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hi0-aA-NNJ">
-                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-kR-dxo">
-                                <rect key="frame" x="20" y="150" width="374" height="594.5"/>
+                                <rect key="frame" x="20" y="160" width="374" height="584.5"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1p6-fq-ice">
@@ -58,28 +58,28 @@
                                     <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHq-KE-Xda"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hwx-SJ-6d9">
-                                <rect key="frame" x="107" y="348" width="200" height="200"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JPX-jZ-Khq">
+                                <rect key="frame" x="132" y="446" width="150" height="4"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="5tq-fp-WTR"/>
-                                    <constraint firstAttribute="width" secondItem="hwx-SJ-6d9" secondAttribute="height" multiplier="1:1" id="G1T-21-piv"/>
+                                    <constraint firstAttribute="width" constant="150" id="KM7-iu-mBh"/>
+                                    <constraint firstAttribute="height" constant="4" id="i6Y-QW-fG5"/>
                                 </constraints>
-                            </activityIndicatorView>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="1p6-fq-ice" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="K8h-ar-BuB" secondAttribute="trailing" symbolic="YES" id="0cu-ig-Mj7"/>
+                            <constraint firstItem="1p6-fq-ice" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="K8h-ar-BuB" secondAttribute="trailing" constant="8" symbolic="YES" id="0cu-ig-Mj7"/>
                             <constraint firstItem="1p6-fq-ice" firstAttribute="centerY" secondItem="K8h-ar-BuB" secondAttribute="centerY" id="2Kd-Vf-rOf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
                             <constraint firstItem="K8h-ar-BuB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3GX-cO-2BE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1p6-fq-ice" secondAttribute="trailing" constant="73" id="4BD-r1-t4p"/>
+                            <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8RM-Z0-XTa"/>
                             <constraint firstItem="K8h-ar-BuB" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="30" id="8n6-mk-mPD"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzw-CD-Hid"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="K8h-ar-BuB" secondAttribute="bottom" constant="10" id="PLk-j4-38b"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="UPu-Yw-pyP"/>
-                            <constraint firstItem="hwx-SJ-6d9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="d5e-S5-XKK"/>
-                            <constraint firstItem="hwx-SJ-6d9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oZp-Cw-DVU"/>
+                            <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dEj-cN-x2u"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="m1D-kG-DUP">
@@ -91,9 +91,9 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="hwx-SJ-6d9" id="1H9-0N-ILw"/>
                         <outlet property="pipButton" destination="1p6-fq-ice" id="RZ0-5N-poF"/>
                         <outlet property="playButton" destination="K8h-ar-BuB" id="QuH-UE-pvH"/>
+                        <outlet property="progressView" destination="JPX-jZ-Khq" id="pRG-aH-xeK"/>
                         <outlet property="videoLayerView" destination="PI5-kR-dxo" id="jOH-I4-Mtu"/>
                     </connections>
                 </viewController>
