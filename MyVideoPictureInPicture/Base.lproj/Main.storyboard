@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="flC-Ll-kCf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="flC-Ll-kCf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,30 +33,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-kR-dxo">
-                                <rect key="frame" x="20" y="160" width="374" height="584.5"/>
+                                <rect key="frame" x="20" y="160" width="374" height="650"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1p6-fq-ice">
-                                <rect key="frame" x="266" y="779" width="75" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                <connections>
-                                    <action selector="togglePictureInPictureMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JLD-5m-el2"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-ar-BuB">
-                                <rect key="frame" x="188" y="774.5" width="38" height="43.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="play.fill" catalog="system" symbolScale="large"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                    </preferredSymbolConfiguration>
-                                </state>
-                                <connections>
-                                    <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GHq-KE-Xda"/>
-                                </connections>
-                            </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JPX-jZ-Khq">
                                 <rect key="frame" x="132" y="446" width="150" height="4"/>
                                 <constraints>
@@ -69,19 +47,29 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="1p6-fq-ice" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="K8h-ar-BuB" secondAttribute="trailing" constant="8" symbolic="YES" id="0cu-ig-Mj7"/>
-                            <constraint firstItem="1p6-fq-ice" firstAttribute="centerY" secondItem="K8h-ar-BuB" secondAttribute="centerY" id="2Kd-Vf-rOf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
-                            <constraint firstItem="K8h-ar-BuB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3GX-cO-2BE"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1p6-fq-ice" secondAttribute="trailing" constant="73" id="4BD-r1-t4p"/>
+                            <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="4Wu-vB-E63"/>
                             <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8RM-Z0-XTa"/>
-                            <constraint firstItem="K8h-ar-BuB" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="30" id="8n6-mk-mPD"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzw-CD-Hid"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="K8h-ar-BuB" secondAttribute="bottom" constant="10" id="PLk-j4-38b"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="10" id="J2m-Fm-h7W"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="UPu-Yw-pyP"/>
                             <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dEj-cN-x2u"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="6FV-wX-3Lb"/>
+                        <barButtonItem enabled="NO" systemItem="play" id="1cy-ro-oxJ">
+                            <connections>
+                                <action selector="didTapPlayButton:" destination="BYZ-38-t0r" id="GKQ-hZ-Vmi"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="0oi-WX-8xS"/>
+                        <barButtonItem enabled="NO" title="PinP" id="2bI-lL-c8t">
+                            <connections>
+                                <action selector="togglePictureInPictureMode:" destination="BYZ-38-t0r" id="q9I-gs-zja"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Title" id="m1D-kG-DUP">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="yiw-eo-Bxp">
                             <connections>
@@ -90,9 +78,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="pipButton" destination="1p6-fq-ice" id="RZ0-5N-poF"/>
-                        <outlet property="playButton" destination="K8h-ar-BuB" id="QuH-UE-pvH"/>
+                        <outlet property="pictureInPictureButton" destination="2bI-lL-c8t" id="iZ4-Vy-aLi"/>
+                        <outlet property="playButton" destination="1cy-ro-oxJ" id="FuS-o6-8hh"/>
                         <outlet property="progressView" destination="JPX-jZ-Khq" id="pRG-aH-xeK"/>
                         <outlet property="videoLayerView" destination="PI5-kR-dxo" id="jOH-I4-Mtu"/>
                     </connections>
@@ -103,12 +92,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="play.fill" catalog="system" width="120" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

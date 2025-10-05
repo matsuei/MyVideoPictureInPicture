@@ -5,9 +5,10 @@ import AVKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
-    @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var pipButton: UIButton!
     @IBOutlet weak var progressView: UIProgressView!
+    
+    @IBOutlet weak var playButton: UIBarButtonItem!
+    @IBOutlet weak var pictureInPictureButton: UIBarButtonItem!
     
     private var playButtonVideoURL: URL?
 
@@ -51,6 +52,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setToolbarHidden(false, animated: true)
         progressView.isHidden = true
     }
 }
@@ -70,6 +72,7 @@ private extension ViewController {
 private extension ViewController {
     func displayVideoPlayButton(forURL videoURL: URL?) {
         playButtonVideoURL = videoURL
+        playButton.isEnabled = videoURL != nil
         playButton.isHidden = videoURL == nil
         if let videoURL {
             playerLayer?.removeFromSuperlayer()
@@ -91,10 +94,8 @@ private extension ViewController {
         switch player.timeControlStatus {
         case .playing:
             player.pause()
-            playButton.setImage(.init(systemName: "play.fill"), for: .normal)
         case .paused:
             player.play()
-            playButton.setImage(.init(systemName: "pause.fill"), for: .normal)
         case .waitingToPlayAtSpecifiedRate:
             print("バッファリング中に変わりました")
         @unknown default:
@@ -114,15 +115,15 @@ private extension ViewController {
             pipPossibleObservation = pipController.observe(\AVPictureInPictureController.isPictureInPicturePossible,
     options: [.initial, .new]) { [weak self] _, change in
                 // Update the PiP button's enabled state.
-                self?.pipButton.isEnabled = change.newValue ?? false
+                self?.pictureInPictureButton.isEnabled = change.newValue ?? false
             }
         } else {
             // PiP isn't supported by the current device. Disable the PiP button.
-            pipButton.isEnabled = false
+            pictureInPictureButton.isEnabled = false
         }
     }
     
-    @IBAction func togglePictureInPictureMode(_ sender: UIButton) {
+    @IBAction func togglePictureInPictureMode(_ sender: UIBarButtonItem) {
         if pipController.isPictureInPictureActive {
             pipController.stopPictureInPicture()
         } else {
