@@ -57,6 +57,11 @@
                         </constraints>
                     </view>
                     <toolbarItems>
+                        <barButtonItem enabled="NO" systemItem="pause" id="0Pn-hb-0uQ">
+                            <connections>
+                                <action selector="didTapPauseButton:" destination="BYZ-38-t0r" id="HFy-m1-CNt"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6FV-wX-3Lb"/>
                         <barButtonItem enabled="NO" systemItem="play" id="1cy-ro-oxJ">
                             <connections>
@@ -80,6 +85,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="pauseButton" destination="0Pn-hb-0uQ" id="0YH-hZ-H2T"/>
                         <outlet property="pictureInPictureButton" destination="2bI-lL-c8t" id="iZ4-Vy-aLi"/>
                         <outlet property="playButton" destination="1cy-ro-oxJ" id="FuS-o6-8hh"/>
                         <outlet property="progressView" destination="JPX-jZ-Khq" id="pRG-aH-xeK"/>

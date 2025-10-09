@@ -7,6 +7,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var progressView: UIProgressView!
     
+    @IBOutlet weak var pauseButton: UIBarButtonItem!
     @IBOutlet weak var playButton: UIBarButtonItem!
     @IBOutlet weak var pictureInPictureButton: UIBarButtonItem!
     
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
     var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     private var observation: NSKeyValueObservation?
+    private var timeControlStatusObserver: NSKeyValueObservation?
     
     @IBAction func presentPickerForImagesAndVideos(_ sender: Any) {
         presentPicker(filter: .videos)
@@ -83,6 +85,21 @@ private extension ViewController {
             if let playerLayer = playerLayer {
                 videoLayerView.layer.addSublayer(playerLayer)
             }
+            timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old]) { [weak self] player, change in
+                switch player.timeControlStatus {
+                case .playing:
+                    self?.pauseButton.isEnabled = true
+                    self?.playButton.isEnabled = false
+                case .paused:
+                    self?.pauseButton.isEnabled = false
+                    self?.playButton.isEnabled = true
+                case .waitingToPlayAtSpecifiedRate:
+                    self?.pauseButton.isEnabled = false
+                    self?.playButton.isEnabled = false
+                @unknown default:
+                    break
+                }
+            }
             setupPictureInPicture()
         }
     }
@@ -92,16 +109,23 @@ private extension ViewController {
             return
         }
         switch player.timeControlStatus {
-        case .playing:
-            player.pause()
         case .paused:
             player.play()
-        case .waitingToPlayAtSpecifiedRate:
-            print("バッファリング中に変わりました")
-        @unknown default:
-            print("不明な状態に変わりました")
+        default:
+            break
         }
-        
+    }
+    
+    @IBAction func didTapPauseButton(_ sender: Any) {
+        guard let player else {
+            return
+        }
+        switch player.timeControlStatus {
+        case .playing:
+            player.pause()
+        default:
+            break
+        }
     }
     
     func setupPictureInPicture() {
