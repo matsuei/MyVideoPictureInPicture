@@ -6,6 +6,7 @@ import AVKit
 class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var navigationLabel: UILabel!
     
     @IBOutlet weak var pauseButton: UIBarButtonItem!
     @IBOutlet weak var playButton: UIBarButtonItem!
@@ -195,6 +196,7 @@ extension ViewController: PHPickerViewControllerDelegate {
         }
         progressView.isHidden = false
         progressView.observedProgress = progress
+        navigationLabel.isHidden = true
     }
 }
 
