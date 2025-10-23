@@ -8,10 +8,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var navigationLabel: UILabel!
-    
-    @IBOutlet weak var pauseButton: UIBarButtonItem!
-    @IBOutlet weak var playButton: UIBarButtonItem!
-    @IBOutlet weak var pictureInPictureButton: UIBarButtonItem!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var pictureInPictureButton: UIButton!
     
     @IBOutlet weak var adBannerContainerView: UIView!
     
@@ -61,6 +59,7 @@ class ViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
         progressView.isHidden = true
+        playButton.isEnabled = false
         setUpAdBanner()
     }
 }
@@ -91,19 +90,15 @@ private extension ViewController {
             if let playerLayer = playerLayer {
                 videoLayerView.layer.addSublayer(playerLayer)
             }
-//            player?.observe(\.status) { [weak self] player, change in
-//                <#code#>
-//            }
             timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old]) { [weak self] player, change in
                 switch player.timeControlStatus {
                 case .playing:
-                    self?.pauseButton.isEnabled = true
-                    self?.playButton.isEnabled = false
-                case .paused:
-                    self?.pauseButton.isEnabled = false
                     self?.playButton.isEnabled = true
+                    self?.playButton.setImage(.init(systemName: "pause.fill"), for: .normal)
+                case .paused:
+                    self?.playButton.isEnabled = true
+                    self?.playButton.setImage(.init(systemName: "play.fill"), for: .normal)
                 case .waitingToPlayAtSpecifiedRate:
-                    self?.pauseButton.isEnabled = false
                     self?.playButton.isEnabled = false
                 @unknown default:
                     break
@@ -113,25 +108,15 @@ private extension ViewController {
         }
     }
     
-    @IBAction func didTapPlayButton(_ sender: Any) {
-        guard let player else {
-            return
-        }
-        switch player.timeControlStatus {
-        case .paused:
-            player.play()
-        default:
-            break
-        }
-    }
-    
-    @IBAction func didTapPauseButton(_ sender: Any) {
+    @IBAction func didTapPlayButton(_ sender: UIButton) {
         guard let player else {
             return
         }
         switch player.timeControlStatus {
         case .playing:
             player.pause()
+        case .paused:
+            player.play()
         default:
             break
         }
@@ -162,7 +147,7 @@ private extension ViewController {
         }
     }
     
-    @IBAction func togglePictureInPictureMode(_ sender: UIBarButtonItem) {
+    @IBAction func togglePictureInPictureMode(_ sender: UIButton) {
         if pipController.isPictureInPictureActive {
             pipController.stopPictureInPicture()
         } else {

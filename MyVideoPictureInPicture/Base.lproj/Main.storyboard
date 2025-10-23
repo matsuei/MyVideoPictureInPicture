@@ -39,7 +39,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-kR-dxo">
-                                <rect key="frame" x="20" y="160" width="374" height="590"/>
+                                <rect key="frame" x="20" y="160" width="374" height="558"/>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JPX-jZ-Khq">
                                 <rect key="frame" x="132" y="446" width="150" height="4"/>
@@ -49,48 +49,57 @@
                                 </constraints>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3u1-TV-uRY">
-                                <rect key="frame" x="0.0" y="755" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="778" width="414" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="KwD-vt-f5D"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="p7J-Mm-EXB">
+                                <rect key="frame" x="0.0" y="718" width="414" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulS-Bd-ngn">
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="didTapPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TKv-t5-2X1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xg-TW-gXa">
+                                        <rect key="frame" x="207" y="0.0" width="207" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="PictureInPicture"/>
+                                        <connections>
+                                            <action selector="togglePictureInPictureMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hhA-AQ-YRK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IAL-Kc-n3u"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="3u1-TV-uRY" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-15" id="0ng-2k-lEp"/>
+                            <constraint firstItem="3u1-TV-uRY" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0ng-2k-lEp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="4Wu-vB-E63"/>
+                            <constraint firstItem="p7J-Mm-EXB" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" id="700-FZ-DWb"/>
                             <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8RM-Z0-XTa"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzw-CD-Hid"/>
                             <constraint firstItem="3u1-TV-uRY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ELu-2X-Ehx"/>
+                            <constraint firstItem="p7J-Mm-EXB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EQy-n1-9zx"/>
+                            <constraint firstItem="3u1-TV-uRY" firstAttribute="top" secondItem="p7J-Mm-EXB" secondAttribute="bottom" constant="10" id="LcJ-QC-Hd8"/>
                             <constraint firstItem="3u1-TV-uRY" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Svs-mu-SkH"/>
-                            <constraint firstItem="3u1-TV-uRY" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="5" id="bjh-yK-vjc"/>
+                            <constraint firstItem="p7J-Mm-EXB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ZSL-Pg-LSR"/>
                             <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dEj-cN-x2u"/>
                             <constraint firstItem="wEX-Rf-EVA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dfN-hs-VQw"/>
                             <constraint firstItem="wEX-Rf-EVA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vM6-8v-Zuh"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem enabled="NO" systemItem="pause" id="0Pn-hb-0uQ">
-                            <connections>
-                                <action selector="didTapPauseButton:" destination="BYZ-38-t0r" id="HFy-m1-CNt"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="6FV-wX-3Lb"/>
-                        <barButtonItem enabled="NO" systemItem="play" id="1cy-ro-oxJ">
-                            <connections>
-                                <action selector="didTapPlayButton:" destination="BYZ-38-t0r" id="GKQ-hZ-Vmi"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="0oi-WX-8xS"/>
-                        <barButtonItem enabled="NO" title="PinP" id="2bI-lL-c8t">
-                            <connections>
-                                <action selector="togglePictureInPictureMode:" destination="BYZ-38-t0r" id="q9I-gs-zja"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="m1D-kG-DUP">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="yiw-eo-Bxp">
                             <connections>
@@ -99,13 +108,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="adBannerContainerView" destination="3u1-TV-uRY" id="RNw-aj-JZu"/>
                         <outlet property="navigationLabel" destination="wEX-Rf-EVA" id="9ia-pp-MhW"/>
-                        <outlet property="pauseButton" destination="0Pn-hb-0uQ" id="0YH-hZ-H2T"/>
-                        <outlet property="pictureInPictureButton" destination="2bI-lL-c8t" id="iZ4-Vy-aLi"/>
-                        <outlet property="playButton" destination="1cy-ro-oxJ" id="FuS-o6-8hh"/>
+                        <outlet property="pictureInPictureButton" destination="8Xg-TW-gXa" id="P4d-SH-svV"/>
+                        <outlet property="playButton" destination="ulS-Bd-ngn" id="BFc-vg-upv"/>
                         <outlet property="progressView" destination="JPX-jZ-Khq" id="pRG-aH-xeK"/>
                         <outlet property="videoLayerView" destination="PI5-kR-dxo" id="jOH-I4-Mtu"/>
                     </connections>
@@ -116,6 +124,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="play.fill" catalog="system" width="120" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
