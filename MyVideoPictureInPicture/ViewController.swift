@@ -2,6 +2,7 @@
 import UIKit
 import PhotosUI
 import AVKit
+import GoogleMobileAds
 
 class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
@@ -11,6 +12,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var pauseButton: UIBarButtonItem!
     @IBOutlet weak var playButton: UIBarButtonItem!
     @IBOutlet weak var pictureInPictureButton: UIBarButtonItem!
+    
+    @IBOutlet weak var adBannerContainerView: UIView!
+    
     
     private var playButtonVideoURL: URL?
 
@@ -57,6 +61,7 @@ class ViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
         progressView.isHidden = true
+        setUpAdBanner()
     }
 }
 
@@ -86,6 +91,9 @@ private extension ViewController {
             if let playerLayer = playerLayer {
                 videoLayerView.layer.addSublayer(playerLayer)
             }
+//            player?.observe(\.status) { [weak self] player, change in
+//                <#code#>
+//            }
             timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old]) { [weak self] player, change in
                 switch player.timeControlStatus {
                 case .playing:
@@ -139,8 +147,14 @@ private extension ViewController {
 
             pipPossibleObservation = pipController.observe(\AVPictureInPictureController.isPictureInPicturePossible,
     options: [.initial, .new]) { [weak self] _, change in
-                // Update the PiP button's enabled state.
-                self?.pictureInPictureButton.isEnabled = change.newValue ?? false
+                guard let self else { return }
+                let isEnabled = change.newValue ?? false
+                pictureInPictureButton.isEnabled = isEnabled
+                if isEnabled {
+                    NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+                } else {
+                    NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+                }
             }
         } else {
             // PiP isn't supported by the current device. Disable the PiP button.
@@ -154,6 +168,14 @@ private extension ViewController {
         } else {
             pipController.startPictureInPicture()
         }
+    }
+    
+    @objc func didEnterBackgroundNotification(_ notification: Notification?) {
+        pipController.startPictureInPicture()
+    }
+    
+    @objc func didBecomeActiveNotification(_ notification: Notification?) {
+        pipController.stopPictureInPicture()
     }
 }
 
@@ -259,5 +281,24 @@ extension ViewController: AVPictureInPictureSampleBufferPlaybackDelegate {
     ) {
         print("\(#function)")
         completionHandler()
+    }
+}
+
+extension ViewController {
+    private func setUpAdBanner() {
+        // Initialize the BannerView.
+        let bannerView = BannerView()
+
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        adBannerContainerView.addSubview(bannerView)
+        NSLayoutConstraint.activate([
+            bannerView.leadingAnchor.constraint(equalTo: adBannerContainerView.leadingAnchor),
+            bannerView.trailingAnchor.constraint(equalTo: adBannerContainerView.trailingAnchor),
+            bannerView.topAnchor.constraint(equalTo: adBannerContainerView.topAnchor),
+            bannerView.bottomAnchor.constraint(equalTo: adBannerContainerView.bottomAnchor)
+        ])
+        bannerView.adSize = currentOrientationAnchoredAdaptiveBanner(width: 375)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2435281174"
+        bannerView.load(Request())
     }
 }

@@ -39,7 +39,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-kR-dxo">
-                                <rect key="frame" x="20" y="160" width="374" height="650"/>
+                                <rect key="frame" x="20" y="160" width="374" height="590"/>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JPX-jZ-Khq">
                                 <rect key="frame" x="132" y="446" width="150" height="4"/>
@@ -48,16 +48,25 @@
                                     <constraint firstAttribute="height" constant="4" id="i6Y-QW-fG5"/>
                                 </constraints>
                             </progressView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3u1-TV-uRY">
+                                <rect key="frame" x="0.0" y="755" width="414" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="KwD-vt-f5D"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="3u1-TV-uRY" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-15" id="0ng-2k-lEp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PI5-kR-dxo" secondAttribute="trailing" constant="20" id="2Qm-Ad-zt8"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="4Wu-vB-E63"/>
                             <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8RM-Z0-XTa"/>
                             <constraint firstItem="PI5-kR-dxo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bzw-CD-Hid"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="10" id="J2m-Fm-h7W"/>
-                            <constraint firstItem="PI5-kR-dxo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="UPu-Yw-pyP"/>
+                            <constraint firstItem="3u1-TV-uRY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ELu-2X-Ehx"/>
+                            <constraint firstItem="3u1-TV-uRY" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Svs-mu-SkH"/>
+                            <constraint firstItem="3u1-TV-uRY" firstAttribute="top" secondItem="PI5-kR-dxo" secondAttribute="bottom" constant="5" id="bjh-yK-vjc"/>
                             <constraint firstItem="JPX-jZ-Khq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dEj-cN-x2u"/>
                             <constraint firstItem="wEX-Rf-EVA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dfN-hs-VQw"/>
                             <constraint firstItem="wEX-Rf-EVA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vM6-8v-Zuh"/>
@@ -92,6 +101,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="adBannerContainerView" destination="3u1-TV-uRY" id="RNw-aj-JZu"/>
                         <outlet property="navigationLabel" destination="wEX-Rf-EVA" id="9ia-pp-MhW"/>
                         <outlet property="pauseButton" destination="0Pn-hb-0uQ" id="0YH-hZ-H2T"/>
                         <outlet property="pictureInPictureButton" destination="2bI-lL-c8t" id="iZ4-Vy-aLi"/>
