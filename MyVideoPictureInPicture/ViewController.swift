@@ -283,7 +283,7 @@ extension ViewController {
             bannerView.bottomAnchor.constraint(equalTo: adBannerContainerView.bottomAnchor)
         ])
         bannerView.adSize = currentOrientationAnchoredAdaptiveBanner(width: 375)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2435281174"
+        bannerView.adUnitID = "ca-app-pub-4342629226243259/9360669677"
         bannerView.load(Request())
     }
 }
