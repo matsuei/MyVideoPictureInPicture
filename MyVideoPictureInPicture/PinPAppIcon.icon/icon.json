@@ -1,0 +1,94 @@
+{
+  "fill" : {
+    "automatic-gradient" : "extended-gray:1.00000,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "fill-specializations" : [
+            {
+              "value" : {
+                "solid" : "extended-srgb:0.00000,0.47843,1.00000,1.00000"
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.51515,0.68923,0.96611,1.00000"
+              }
+            }
+          ],
+          "glass" : true,
+          "image-name" : "Polygon 1.svg",
+          "name" : "Playutton",
+          "position" : {
+            "scale" : 0.8,
+            "translation-in-points" : [
+              65.5,
+              269.04686300000003
+            ]
+          }
+        },
+        {
+          "fill-specializations" : [
+            {
+              "value" : {
+                "solid" : "display-p3:0.96338,0.96611,0.94240,1.00000"
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.24730,0.24768,0.24093,1.00000"
+              }
+            }
+          ],
+          "image-name" : "Rectangle 1.svg",
+          "name" : "Video",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              65.5,
+              269.046875
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.36667,0.60635,1.05199,1.00000",
+              "extended-srgb:0.00000,0.47843,1.00000,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.5,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.5,
+                "y" : 0.7
+              }
+            }
+          },
+          "image-name" : "iPhone 16 - 1-2.svg",
+          "name" : "iPhone"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

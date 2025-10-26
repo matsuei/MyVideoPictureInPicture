@@ -2,14 +2,17 @@
 import UIKit
 import PhotosUI
 import AVKit
+import GoogleMobileAds
 
 class ViewController: UIViewController {
     @IBOutlet weak var videoLayerView: UIView!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var navigationLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var pictureInPictureButton: UIButton!
     
-    @IBOutlet weak var pauseButton: UIBarButtonItem!
-    @IBOutlet weak var playButton: UIBarButtonItem!
-    @IBOutlet weak var pictureInPictureButton: UIBarButtonItem!
+    @IBOutlet weak var adBannerContainerView: UIView!
+    
     
     private var playButtonVideoURL: URL?
 
@@ -56,6 +59,8 @@ class ViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
         progressView.isHidden = true
+        playButton.isEnabled = false
+        setUpAdBanner()
     }
 }
 
@@ -88,13 +93,12 @@ private extension ViewController {
             timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old]) { [weak self] player, change in
                 switch player.timeControlStatus {
                 case .playing:
-                    self?.pauseButton.isEnabled = true
-                    self?.playButton.isEnabled = false
-                case .paused:
-                    self?.pauseButton.isEnabled = false
                     self?.playButton.isEnabled = true
+                    self?.playButton.setImage(.init(systemName: "pause.fill"), for: .normal)
+                case .paused:
+                    self?.playButton.isEnabled = true
+                    self?.playButton.setImage(.init(systemName: "play.fill"), for: .normal)
                 case .waitingToPlayAtSpecifiedRate:
-                    self?.pauseButton.isEnabled = false
                     self?.playButton.isEnabled = false
                 @unknown default:
                     break
@@ -104,25 +108,15 @@ private extension ViewController {
         }
     }
     
-    @IBAction func didTapPlayButton(_ sender: Any) {
-        guard let player else {
-            return
-        }
-        switch player.timeControlStatus {
-        case .paused:
-            player.play()
-        default:
-            break
-        }
-    }
-    
-    @IBAction func didTapPauseButton(_ sender: Any) {
+    @IBAction func didTapPlayButton(_ sender: UIButton) {
         guard let player else {
             return
         }
         switch player.timeControlStatus {
         case .playing:
             player.pause()
+        case .paused:
+            player.play()
         default:
             break
         }
@@ -138,8 +132,14 @@ private extension ViewController {
 
             pipPossibleObservation = pipController.observe(\AVPictureInPictureController.isPictureInPicturePossible,
     options: [.initial, .new]) { [weak self] _, change in
-                // Update the PiP button's enabled state.
-                self?.pictureInPictureButton.isEnabled = change.newValue ?? false
+                guard let self else { return }
+                let isEnabled = change.newValue ?? false
+                pictureInPictureButton.isEnabled = isEnabled
+                if isEnabled {
+                    NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+                } else {
+                    NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+                }
             }
         } else {
             // PiP isn't supported by the current device. Disable the PiP button.
@@ -147,12 +147,20 @@ private extension ViewController {
         }
     }
     
-    @IBAction func togglePictureInPictureMode(_ sender: UIBarButtonItem) {
+    @IBAction func togglePictureInPictureMode(_ sender: UIButton) {
         if pipController.isPictureInPictureActive {
             pipController.stopPictureInPicture()
         } else {
             pipController.startPictureInPicture()
         }
+    }
+    
+    @objc func didEnterBackgroundNotification(_ notification: Notification?) {
+        pipController.startPictureInPicture()
+    }
+    
+    @objc func didBecomeActiveNotification(_ notification: Notification?) {
+        pipController.stopPictureInPicture()
     }
 }
 
@@ -195,6 +203,7 @@ extension ViewController: PHPickerViewControllerDelegate {
         }
         progressView.isHidden = false
         progressView.observedProgress = progress
+        navigationLabel.isHidden = true
     }
 }
 
@@ -257,5 +266,24 @@ extension ViewController: AVPictureInPictureSampleBufferPlaybackDelegate {
     ) {
         print("\(#function)")
         completionHandler()
+    }
+}
+
+extension ViewController {
+    private func setUpAdBanner() {
+        // Initialize the BannerView.
+        let bannerView = BannerView()
+
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        adBannerContainerView.addSubview(bannerView)
+        NSLayoutConstraint.activate([
+            bannerView.leadingAnchor.constraint(equalTo: adBannerContainerView.leadingAnchor),
+            bannerView.trailingAnchor.constraint(equalTo: adBannerContainerView.trailingAnchor),
+            bannerView.topAnchor.constraint(equalTo: adBannerContainerView.topAnchor),
+            bannerView.bottomAnchor.constraint(equalTo: adBannerContainerView.bottomAnchor)
+        ])
+        bannerView.adSize = currentOrientationAnchoredAdaptiveBanner(width: 375)
+        bannerView.adUnitID = "ca-app-pub-4342629226243259/9360669677"
+        bannerView.load(Request())
     }
 }

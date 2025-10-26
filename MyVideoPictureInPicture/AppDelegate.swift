@@ -7,11 +7,10 @@
 
 import UIKit
 import AVFAudio
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let session = AVAudioSession.sharedInstance()
@@ -20,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch  {
             print(error.localizedDescription)
         }
+        MobileAds.shared.start()
         return true
     }
 
